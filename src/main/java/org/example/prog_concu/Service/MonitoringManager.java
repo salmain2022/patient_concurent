@@ -3,6 +3,7 @@ package org.example.prog_concu.Service;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.example.prog_concu.entities.SensorData;
+import org.example.prog_concu.repository.SensorDataRepository;
 import org.example.prog_concu.simulator.SensorSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,11 +19,14 @@ public class MonitoringManager {
 
     // Injectez le contexte Spring pour créer des instances de SensorSimulator
     private final ApplicationContext applicationContext;
+    private final SensorDataRepository sensorDataRepository;
+
 
     @Autowired
-    public MonitoringManager(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+public MonitoringManager(ApplicationContext applicationContext, SensorDataRepository sensorDataRepository) {
+    this.applicationContext = applicationContext;
+    this.sensorDataRepository = sensorDataRepository;
+}
 
     @PostConstruct
     public void init() {
