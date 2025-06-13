@@ -55,12 +55,47 @@ public class SensorSimulator implements Runnable {
     }
 
     private SensorData generateSensorData() {
+        // 30% de chance de générer des valeurs anormales pour tester les alertes
+        boolean generateAbnormal = random.nextDouble() < 0.3;
+        
+        int heartRate;
+        double temperature;
+        int systolic;
+        int diastolic;
+        
+        if (generateAbnormal) {
+            // Générer des valeurs anormales
+            heartRate = random.nextBoolean() ? 
+                random.nextInt(30) + 30 :  // Bradycardie (30-60)
+                random.nextInt(50) + 110;  // Tachycardie (110-160)
+            
+            temperature = random.nextBoolean() ? 
+                35.0 + random.nextDouble() :      // Hypothermie (35.0-36.0)
+                37.6 + random.nextDouble() * 2;  // Hyperthermie (37.6-39.6)
+            
+            systolic = random.nextBoolean() ? 
+                random.nextInt(20) + 70 :   // Hypotension (70-90)
+                random.nextInt(50) + 150;   // Hypertension (150-200)
+            
+            diastolic = random.nextBoolean() ? 
+                random.nextInt(15) + 40 :   // Hypotension (40-55)
+                random.nextInt(30) + 95;    // Hypertension (95-125)
+                
+            System.out.println("⚠️ Valeurs ANORMALES générées pour patient " + patientId);
+        } else {
+            // Valeurs normales
+            heartRate = 60 + random.nextInt(40);              // 60-100 bpm
+            temperature = 36.0 + random.nextDouble() * 1.5;   // 36.0-37.5°C
+            systolic = 90 + random.nextInt(50);               // 90-140 mmHg
+            diastolic = 60 + random.nextInt(30);              // 60-90 mmHg
+        }
+        
         return new SensorData(
                 patientId,
-                60 + random.nextInt(40),             // FC: 60-100 bpm
-                36.0 + random.nextDouble() * 2.0,     // Temp: 36.0-38.0 °C
-                110 + random.nextInt(30),            // Systolique: 110-140
-                70 + random.nextInt(20),             // Diastolique: 70-90
+                heartRate,
+                Math.round(temperature * 10.0) / 10.0, // Arrondir à 1 décimale
+                systolic,
+                diastolic,
                 LocalDateTime.now()
         );
     }

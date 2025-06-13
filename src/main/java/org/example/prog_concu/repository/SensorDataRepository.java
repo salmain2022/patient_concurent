@@ -1,12 +1,14 @@
 package org.example.prog_concu.repository;
 
 import org.example.prog_concu.entities.SensorData;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Repository
 public class SensorDataRepository {
     private final Map<UUID, SensorData> sensorDataStore = new ConcurrentHashMap<>();
 

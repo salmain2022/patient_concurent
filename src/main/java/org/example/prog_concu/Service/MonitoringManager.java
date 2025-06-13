@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.example.prog_concu.entities.SensorData;
 import org.example.prog_concu.repository.SensorDataRepository;
+import org.example.prog_concu.repository.AlertRepository;
 import org.example.prog_concu.simulator.SensorSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -17,20 +18,49 @@ public class MonitoringManager {
     private final ConcurrentHashMap<Long, ScheduledFuture<?>> activeSimulations = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
 
-    // Injectez le contexte Spring pour créer des instances de SensorSimulator
+    // Ajout pour MonitorTask
+    private MonitorTask monitorTask;
+    private ScheduledFuture<?> monitoringTask;
+
     private final ApplicationContext applicationContext;
     private final SensorDataRepository sensorDataRepository;
-
+    private final AlertRepository alertRepository;
 
     @Autowired
-public MonitoringManager(ApplicationContext applicationContext, SensorDataRepository sensorDataRepository) {
-    this.applicationContext = applicationContext;
-    this.sensorDataRepository = sensorDataRepository;
-}
+    public MonitoringManager(ApplicationContext applicationContext, 
+                           SensorDataRepository sensorDataRepository,
+                           AlertRepository alertRepository) {
+        this.applicationContext = applicationContext;
+        this.sensorDataRepository = sensorDataRepository;
+        this.alertRepository = alertRepository;
+    }
 
     @PostConstruct
     public void init() {
         System.out.println("✅ MonitoringManager initialized");
+        
+        // Initialiser MonitorTask avec la map partagée
+        monitorTask = new MonitorTask(sensorDataMap);
+        
+        // Injecter manuellement AlertRepository (car MonitorTask est créé manuellement)
+        monitorTask.alertRepository = alertRepository;
+        
+        // Démarrer la surveillance automatique - MonitorTask s'exécute toutes les 3 secondes
+        monitoringTask = executorService.scheduleAtFixedRate(
+            () -> {
+                try {
+                    monitorTask.run();
+                } catch (Exception e) {
+                    System.err.println("❌ Erreur dans MonitorTask: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }, 
+            5, // délai initial de 5 secondes
+            3, // intervalle de 3 secondes
+            TimeUnit.SECONDS
+        );
+        
+        System.out.println("🔍 Système de monitoring automatique démarré!");
     }
 
     public void startMonitoring(Long patientId) {
@@ -74,9 +104,30 @@ public MonitoringManager(ApplicationContext applicationContext, SensorDataReposi
     public ConcurrentHashMap<Long, SensorData> getAllSensorData() {
         return new ConcurrentHashMap<>(sensorDataMap);
     }
+    
+    // Nouvelles méthodes utilitaires
+    public void printSystemStatus() {
+        System.out.println("\n=== ÉTAT DU SYSTÈME DE MONITORING ===");
+        System.out.println("Patients surveillés: " + sensorDataMap.size());
+        System.out.println("Simulateurs actifs: " + activeSimulations.size());
+        System.out.println("Total données capteur: " + sensorDataRepository.count());
+        System.out.println("Total alertes: " + alertRepository.count());
+        System.out.println("Alertes actives: " + alertRepository.findActiveAlerts().size());
+        
+        if (monitorTask != null) {
+            monitorTask.printMonitoringStats();
+        }
+        
+        System.out.println("=====================================\n");
+    }
 
     @PreDestroy
     public void cleanUp() {
+        // Arrêter le MonitorTask
+        if (monitoringTask != null) {
+            monitoringTask.cancel(true);
+        }
+        
         // Arrêt propre de tous les threads
         executorService.shutdown();
         try {

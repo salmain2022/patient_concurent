@@ -1,11 +1,13 @@
 package org.example.prog_concu.repository;
 
+import org.springframework.stereotype.Repository;
 import org.example.prog_concu.entities.Alert;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+@Repository
 public class AlertRepository {
     private final Map<UUID, Alert> alerts = new ConcurrentHashMap<>();
 
@@ -26,7 +28,7 @@ public class AlertRepository {
     }
 
     public void save(Alert alert) {
-        // Utilisation d’un UUID pour clé unique
+        // Utilisation d'un UUID pour clé unique
         alerts.put(UUID.randomUUID(), alert);
     }
 
