@@ -1,16 +1,7 @@
 package org.example.prog_concu.entities;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@Builder
 public class SensorData {
     private Long patientId;
     private int heartRate;
@@ -20,6 +11,8 @@ public class SensorData {
     private LocalDateTime timestamp;
 
     // Constructeur
+    public SensorData() {}
+
     public SensorData(Long patientId, int heartRate, double temperature,
                       int systolic, int diastolic, LocalDateTime timestamp) {
         this.patientId = patientId;
@@ -30,8 +23,55 @@ public class SensorData {
         this.timestamp = timestamp;
     }
 
-    // Getters & Setters
-    // (omis pour brièveté - générer avec IDE)
+    // Getters
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public int getHeartRate() {
+        return heartRate;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public int getBloodPressureSystolic() {
+        return bloodPressureSystolic;
+    }
+
+    public int getBloodPressureDiastolic() {
+        return bloodPressureDiastolic;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    // Setters
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setHeartRate(int heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
+
+    public void setBloodPressureSystolic(int bloodPressureSystolic) {
+        this.bloodPressureSystolic = bloodPressureSystolic;
+    }
+
+    public void setBloodPressureDiastolic(int bloodPressureDiastolic) {
+        this.bloodPressureDiastolic = bloodPressureDiastolic;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
 
     @Override
     public String toString() {
@@ -43,4 +83,3 @@ public class SensorData {
         );
     }
 }
-

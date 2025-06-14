@@ -7,15 +7,21 @@ import org.example.prog_concu.repository.SensorDataRepository;
 import org.example.prog_concu.simulator.SensorSimulator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class SimulatorConfig {
+
     @Bean
-    @Scope("prototype")
-    public SensorSimulator sensorSimulator(Long patientId, int intervalMillis,
-                                    ConcurrentHashMap<Long, SensorData> sharedMap,
-                                    SensorDataRepository sensorDataRepository) {
-        return new SensorSimulator(patientId, intervalMillis, sharedMap, sensorDataRepository);
+    public ConcurrentHashMap<Long, SensorData> sharedSensorDataMap() {
+        return new ConcurrentHashMap<>();
+    }
+
+    @Bean
+    public SensorSimulator sensorSimulator(SensorDataRepository sensorDataRepository,
+                                           ConcurrentHashMap<Long, SensorData> sharedSensorDataMap) {
+        Long patientId = 1L;       // Exemple d'ID patient fixe ou paramétré autrement
+        int intervalMillis = 3000; // Exemple d'intervalle fixe
+
+        return new SensorSimulator(patientId, intervalMillis, sharedSensorDataMap, sensorDataRepository);
     }
 }

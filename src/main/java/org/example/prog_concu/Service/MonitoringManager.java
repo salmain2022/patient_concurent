@@ -4,7 +4,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.example.prog_concu.entities.SensorData;
 import org.example.prog_concu.repository.SensorDataRepository;
-import org.example.prog_concu.repository.AlertRepository;
 import org.example.prog_concu.simulator.SensorSimulator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,53 +13,51 @@ import java.util.concurrent.*;
 
 @Service
 public class MonitoringManager {
+
     private final ConcurrentHashMap<Long, SensorData> sensorDataMap = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Long, ScheduledFuture<?>> activeSimulations = new ConcurrentHashMap<>();
     private final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
 
-    // Ajout pour MonitorTask
+    private final ApplicationContext applicationContext;
+    private final SensorDataRepository sensorDataRepository;
+    private final AlertService alertService;
+
     private MonitorTask monitorTask;
     private ScheduledFuture<?> monitoringTask;
 
-    private final ApplicationContext applicationContext;
-    private final SensorDataRepository sensorDataRepository;
-    private final AlertRepository alertRepository;
-
     @Autowired
-    public MonitoringManager(ApplicationContext applicationContext, 
-                           SensorDataRepository sensorDataRepository,
-                           AlertRepository alertRepository) {
+    public MonitoringManager(ApplicationContext applicationContext,
+                             SensorDataRepository sensorDataRepository,
+                             AlertService alertService) {
         this.applicationContext = applicationContext;
         this.sensorDataRepository = sensorDataRepository;
-        this.alertRepository = alertRepository;
+        this.alertService = alertService;
     }
 
     @PostConstruct
     public void init() {
         System.out.println("✅ MonitoringManager initialized");
-        
-        // Initialiser MonitorTask avec la map partagée
+
+        // Création propre de MonitorTask avec injection de la map + alertService
         monitorTask = new MonitorTask(sensorDataMap);
-        
-        // Injecter manuellement AlertRepository (car MonitorTask est créé manuellement)
-        monitorTask.alertRepository = alertRepository;
-        
-        // Démarrer la surveillance automatique - MonitorTask s'exécute toutes les 3 secondes
+        monitorTask.setAlertService(alertService);  // Injection via setter (car instancié manuellement)
+
+        // Lancer le monitoring périodique (toutes les 3 secondes)
         monitoringTask = executorService.scheduleAtFixedRate(
-            () -> {
-                try {
-                    monitorTask.run();
-                } catch (Exception e) {
-                    System.err.println("❌ Erreur dans MonitorTask: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }, 
-            5, // délai initial de 5 secondes
-            3, // intervalle de 3 secondes
-            TimeUnit.SECONDS
+                () -> {
+                    try {
+                        monitorTask.run();
+                    } catch (Exception e) {
+                        System.err.println("❌ Erreur dans MonitorTask: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                },
+                5, // délai initial
+                3, // intervalle
+                TimeUnit.SECONDS
         );
-        
-        System.out.println("🔍 Système de monitoring automatique démarré!");
+
+        System.out.println("🔍 Système de monitoring automatique démarré !");
     }
 
     public void startMonitoring(Long patientId) {
@@ -69,11 +66,10 @@ public class MonitoringManager {
             return;
         }
 
-        // Créez le simulateur via Spring pour une meilleure gestion des dépendances
         SensorSimulator simulator = applicationContext.getBean(
                 SensorSimulator.class,
                 patientId,
-                3000,  // Intervalle de 3 secondes
+                3000,
                 sensorDataMap
         );
 
@@ -104,31 +100,28 @@ public class MonitoringManager {
     public ConcurrentHashMap<Long, SensorData> getAllSensorData() {
         return new ConcurrentHashMap<>(sensorDataMap);
     }
-    
-    // Nouvelles méthodes utilitaires
+
     public void printSystemStatus() {
         System.out.println("\n=== ÉTAT DU SYSTÈME DE MONITORING ===");
         System.out.println("Patients surveillés: " + sensorDataMap.size());
         System.out.println("Simulateurs actifs: " + activeSimulations.size());
         System.out.println("Total données capteur: " + sensorDataRepository.count());
-        System.out.println("Total alertes: " + alertRepository.count());
-        System.out.println("Alertes actives: " + alertRepository.findActiveAlerts().size());
-        
+        System.out.println("Alertes actives: " + alertService.getActiveAlerts().size());
+        System.out.println("Total alertes: " + alertService.getAllAlerts().size());
+
         if (monitorTask != null) {
             monitorTask.printMonitoringStats();
         }
-        
+
         System.out.println("=====================================\n");
     }
 
     @PreDestroy
     public void cleanUp() {
-        // Arrêter le MonitorTask
         if (monitoringTask != null) {
             monitoringTask.cancel(true);
         }
-        
-        // Arrêt propre de tous les threads
+
         executorService.shutdown();
         try {
             if (!executorService.awaitTermination(5, TimeUnit.SECONDS)) {
@@ -138,6 +131,7 @@ public class MonitoringManager {
             executorService.shutdownNow();
             Thread.currentThread().interrupt();
         }
+
         System.out.println("🔴 MonitoringManager arrêté");
     }
 }

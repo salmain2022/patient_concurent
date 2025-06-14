@@ -2,6 +2,7 @@ package org.example.prog_concu;
 
 import org.example.prog_concu.entities.Patient;
 import org.example.prog_concu.repository.PatientRepository;
+import org.example.prog_concu.Service.MonitoringManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,7 @@ import java.util.concurrent.Executors;
 
 @SpringBootApplication
 public class ProgConcuApplication {
-    // Cache mémoire pour les patients
+
     private static final ConcurrentHashMap<Long, Patient> patientCache = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
@@ -22,7 +23,7 @@ public class ProgConcuApplication {
     }
 
     @Bean
-    CommandLineRunner runner(PatientRepository repository) {
+    CommandLineRunner runner(PatientRepository repository, MonitoringManager monitoringManager) {
         return args -> {
             // Création et sauvegarde du patient initial
             Patient savedPatient = repository.save(
@@ -34,15 +35,16 @@ public class ProgConcuApplication {
                             .build()
             );
 
-            // Ajout au cache ConcurrentHashMap
             patientCache.put(savedPatient.getId(), savedPatient);
             System.out.println("✅ Patient initial ajouté au cache (ID: " + savedPatient.getId() + ")");
 
-            // Affichage des patients de la base
+            // Facultatif : démarrage automatique de la surveillance
+            monitoringManager.startMonitoring(savedPatient.getId());
+
             System.out.println("📋 Liste des patients (base de données):");
             repository.findAll().forEach(System.out::println);
 
-            // Lancement de la simulation dans un thread NON-DAEMON
+            // Simulation multi-thread (indépendante du monitoring des signes vitaux)
             Thread simulationThread = new Thread(() -> {
                 try {
                     startSimulation();
@@ -50,7 +52,7 @@ public class ProgConcuApplication {
                     e.printStackTrace();
                 }
             });
-            simulationThread.setDaemon(false); // ESSENTIEL: maintient l'application active
+            simulationThread.setDaemon(false);
             simulationThread.start();
         };
     }
@@ -58,10 +60,8 @@ public class ProgConcuApplication {
     private void startSimulation() {
         System.out.println("\n🚀 Démarrage de la simulation concurrente");
 
-        // Création d'un pool de 4 threads
         ExecutorService executor = Executors.newFixedThreadPool(4);
 
-        // Tâche 1: Ajout de nouveaux patients
         executor.submit(() -> {
             for (int i = 1; i <= 5; i++) {
                 Patient newPatient = Patient.builder()
@@ -78,14 +78,13 @@ public class ProgConcuApplication {
                         + " a ajouté: " + newPatient.getNom() + " (ID: " + newId + ")");
 
                 try {
-                    Thread.sleep(150); // Simulation de traitement
+                    Thread.sleep(150);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
         });
 
-        // Tâche 2: Lecture des patients
         executor.submit(() -> {
             for (int i = 0; i < 3; i++) {
                 System.out.println("[READ] Thread " + Thread.currentThread().getId()
@@ -103,7 +102,6 @@ public class ProgConcuApplication {
             }
         });
 
-        // Tâche 3: Mise à jour de patients
         executor.submit(() -> {
             for (int i = 1; i <= 3; i++) {
                 int finalI = i;
@@ -125,10 +123,9 @@ public class ProgConcuApplication {
             }
         });
 
-        // Tâche 4: Suppression de patients
         executor.submit(() -> {
             try {
-                Thread.sleep(500); // Attente pour que des données soient créées
+                Thread.sleep(500);
 
                 for (long id = 101L; id <= 103L; id++) {
                     Patient removed = patientCache.remove(id);
@@ -143,10 +140,7 @@ public class ProgConcuApplication {
             }
         });
 
-        // Arrêt contrôlé de l'executor
         executor.shutdown();
-
-        // Attente de la fin des tâches
         while (!executor.isTerminated()) {
             try {
                 Thread.sleep(100);
@@ -155,7 +149,6 @@ public class ProgConcuApplication {
             }
         }
 
-        // Affichage final du cache
         System.out.println("\n✅ Simulation terminée");
         System.out.println("📊 État final du cache (" + patientCache.size() + " patients):");
         patientCache.forEach((id, patient) ->

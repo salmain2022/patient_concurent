@@ -5,54 +5,73 @@ package org.example.prog_concu.entities;
 import java.time.LocalDateTime;
 
 public class Alert {
+
     private Long patientId;
     private String signeVital;
-    private double valeurMesuree;
-    private String seuilFranchi;
-    private LocalDateTime timestamp;
+    private double valeur;
     private boolean active;
+    private LocalDateTime dateCreation;
 
-    // Constructeur par défaut
-    public Alert() {}
-
-    // Constructeur paramétré
-    public Alert(Long patientId, String signeVital, double valeurMesuree, String seuilFranchi, boolean active) {
+    // Constructeur complet
+    public Alert(Long patientId, String signeVital, double valeur, boolean active, LocalDateTime dateCreation) {
         this.patientId = patientId;
         this.signeVital = signeVital;
-        this.valeurMesuree = valeurMesuree;
-        this.seuilFranchi = seuilFranchi;
-        this.timestamp = LocalDateTime.now();
+        this.valeur = valeur;
+        this.active = active;
+        this.dateCreation = dateCreation;
+    }
+
+    // getters et setters
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public String getSigneVital() {
+        return signeVital;
+    }
+
+    public void setSigneVital(String signeVital) {
+        this.signeVital = signeVital;
+    }
+
+    public double getValeur() {
+        return valeur;
+    }
+
+    public void setValeur(double valeur) {
+        this.valeur = valeur;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    // Getters et Setters
-    public Long getPatientId() { return patientId; }
-    public void setPatientId(Long patientId) { this.patientId = patientId; }
+    public LocalDateTime getDateCreation() {
+        return dateCreation;
+    }
 
-    public String getSigneVital() { return signeVital; }
-    public void setSigneVital(String signeVital) { this.signeVital = signeVital; }
-
-    public double getValeurMesuree() { return valeurMesuree; }
-    public void setValeurMesuree(double valeurMesuree) { this.valeurMesuree = valeurMesuree; }
-
-    public String getSeuilFranchi() { return seuilFranchi; }
-    public void setSeuilFranchi(String seuilFranchi) { this.seuilFranchi = seuilFranchi; }
-
-    public LocalDateTime getTimestamp() { return timestamp; }
-    public void setTimestamp(LocalDateTime timestamp) { this.timestamp = timestamp; }
-
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
-
-    @Override
-    public String toString() {
-        return "Alert{" +
-                "patientId=" + patientId +
-                ", signeVital='" + signeVital + '\'' +
-                ", valeurMesuree=" + valeurMesuree +
-                ", seuilFranchi='" + seuilFranchi + '\'' +
-                ", timestamp=" + timestamp +
-                ", active=" + active +
-                '}';
+    public void setDateCreation(LocalDateTime dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }
+
+//    @Override
+//    public String toString() {
+//        return "Alert{" +
+//                "patientId=" + patientId +
+//                ", signeVital='" + signeVital + '\'' +
+//                ", valeurMesuree=" + valeurMesuree +
+//                ", seuilFranchi='" + seuilFranchi + '\'' +
+//                ", timestamp=" + timestamp +
+//                ", active=" + active +
+//                '}';
+//    }
+//}
