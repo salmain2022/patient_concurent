@@ -4,74 +4,47 @@ package org.example.prog_concu.entities;
 
 import java.time.LocalDateTime;
 
-public class Alert {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Alert {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     private Long patientId;
     private String signeVital;
-    private double valeur;
-    private boolean active;
-    private LocalDateTime dateCreation;
+    private Double valeurMesuree;
+    private Double seuilFranchi;
+    private LocalDateTime timestamp;
+    private boolean active = true;
 
-    // Constructeur complet
-    public Alert(Long patientId, String signeVital, double valeur, boolean active, LocalDateTime dateCreation) {
-        this.patientId = patientId;
-        this.signeVital = signeVital;
-        this.valeur = valeur;
-        this.active = active;
-        this.dateCreation = dateCreation;
-    }
+    // Constructeurs, getters et setters
+    // ...
 
-    // getters et setters
-    public Long getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
-    }
-
-    public String getSigneVital() {
-        return signeVital;
-    }
-
-    public void setSigneVital(String signeVital) {
-        this.signeVital = signeVital;
-    }
-
-    public double getValeur() {
-        return valeur;
-    }
-
-    public void setValeur(double valeur) {
-        this.valeur = valeur;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public LocalDateTime getDateCreation() {
-        return dateCreation;
-    }
-
-    public void setDateCreation(LocalDateTime dateCreation) {
-        this.dateCreation = dateCreation;
+    @Override
+    public String toString() {
+        return "Alert{" +
+                "id=" + id +
+                ", patientId=" + patientId +
+                ", signeVital='" + signeVital + '\'' +
+                ", valeurMesuree=" + valeurMesuree +
+                ", seuilFranchi=" + seuilFranchi +
+                ", timestamp=" + timestamp +
+                ", active=" + active +
+                '}';
     }
 }
-
-//    @Override
-//    public String toString() {
-//        return "Alert{" +
-//                "patientId=" + patientId +
-//                ", signeVital='" + signeVital + '\'' +
-//                ", valeurMesuree=" + valeurMesuree +
-//                ", seuilFranchi='" + seuilFranchi + '\'' +
-//                ", timestamp=" + timestamp +
-//                ", active=" + active +
-//                '}';
-//    }
-//}

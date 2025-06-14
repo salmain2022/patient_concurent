@@ -5,18 +5,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
 public class AlertService {
 
     private final ConcurrentLinkedQueue<Alert> alertQueue = new ConcurrentLinkedQueue<>();
+    private final AtomicLong idCounter = new AtomicLong(1); // Pour générer des IDs uniques
 
     public void addAlert(Alert alert) {
-        alertQueue.offer(alert);
-        System.out.println("🚨 Nouvelle alerte détectée : " + alert);
+        // Vérifie si une alerte similaire existe déjà
+        boolean alertExists = isAlertActive(alert.getPatientId(), alert.getSigneVital());
+        
+        if (!alertExists) {
+            alert.setId(idCounter.getAndIncrement()); // Attribution d'un ID
+            alert.setActive(true);
+            alertQueue.offer(alert);
+            System.out.println("🚨 Nouvelle alerte détectée : " + alert);
+        }
     }
-
 
     public List<Alert> getActiveAlerts() {
         return alertQueue.stream()
@@ -32,14 +40,19 @@ public class AlertService {
         return alertQueue.stream()
                 .anyMatch(alert ->
                         alert.isActive() &&
-                                alert.getPatientId().equals(patientId) &&
-                                alert.getSigneVital().equalsIgnoreCase(signeVital)
+                        alert.getPatientId().equals(patientId) &&
+                        alert.getSigneVital().equalsIgnoreCase(signeVital)
                 );
     }
 
-    public void acquitterAlerte(Alert alert) {
-        alert.setActive(false);
-        System.out.println("✅ Alerte acquittée: " + alert);
+    public void acquitterAlerte(Long alertId) {
+        alertQueue.stream()
+                .filter(alert -> alert.getId().equals(alertId))
+                .findFirst()
+                .ifPresent(alert -> {
+                    alert.setActive(false);
+                    System.out.println("✅ Alerte acquittée: " + alert);
+                });
     }
 
     public void acquitterAlertesByPatient(Long patientId) {

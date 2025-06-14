@@ -39,7 +39,7 @@ public class MonitoringTest implements CommandLineRunner {
             .limit(10) // Limiter à 10 alertes pour éviter le spam
             .forEach(alert -> 
                 System.out.println("   → Patient " + alert.getPatientId() + 
-                    " - " + alert.getSigneVital() + " = " + alert.getValeurMesuree() +
+                    " - " + alert.getSigneVital() + " = " + alert.getValeur() +
                     " (Seuil: " + alert.getSeuilFranchi() + ")")
             );
         
