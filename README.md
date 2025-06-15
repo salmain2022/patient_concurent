@@ -10,8 +10,8 @@
 
 | **Étudiantes** | **Formation** | **Institution** |
 |----------------|---------------|-----------------|
-| 👩‍💻 **Houda Belhad** | Master Ingénierie de Développement Logiciel et Décisionnel | FSR - Université Mohammed V |
-| 👩‍💻 **Salma Boughanja** | Master Ingénierie de Développement Logiciel et Décisionnel | Rabat, Maroc |
+| 👩‍💻 **Houda Belhad** | Master Ingénierie de Développement Logiciel et Décisionnel | FSR - Université Mohammed V - Rabat, Maroc |
+| 👩‍💻 **Salma Boughanja** | Master Ingénierie de Développement Logiciel et Décisionnel | FSR - Université Mohammed V - Rabat, Maroc |
 
 **📚 Module :** Programmation Concurrente  
 **👨‍🏫 Encadrant :** Mr. Ouacha Ali  
