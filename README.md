@@ -535,11 +535,12 @@ Ce projet est développé à des fins académiques dans le cadre du programme de
 
 ## 📞 Contact
 
-👩‍💻 **Houda Belhad** - [GitHub Profile]  
-👩‍💻 **Salma Boughanja** - [GitHub Profile]
+👩‍💻 **Houda Belhad** - [houdabelhad1](https://github.com/houdabelhad1)  
+👩‍💻 **Salma Boughanja** - [salmain2022](https://github.com/salmain2022)
 
 🏫 **Institution** : Faculté des Sciences, Université Mohammed V, Rabat  
-📧 **Contact Académique** : [Informations de contact]
+📧 **Contact Académique** : [houda.belhad@um5r.ac.ma](houda.belhad@um5r.ac.ma)
+[salma.boughanja@um5r.ac.ma](salma.boughanja@um5r.ac.ma)
 
 ---
 
