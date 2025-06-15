@@ -9,7 +9,16 @@
 ## 👥 Équipe de Développement
 
 | **Étudiantes** | **Formation** | **Institution** |
-|## 🚀 Quick Start
+|----------------|---------------|-----------------|
+| 👩‍💻 **Houda Belhad** | Master Ingénierie de Développement Logiciel et Décisionnel | FSR - Université Mohammed V |
+| 👩‍💻 **Salma Boughanja** | Master Ingénierie de Développement Logiciel et Décisionnel | Rabat, Maroc |
+
+**📚 Module :** Programmation Concurrente  
+**👨‍🏫 Encadrant :** Mr. Ouacha Ali  
+
+---
+
+## 🚀 Quick Start
 
 ```bash
 # Clone the repository
@@ -33,75 +42,41 @@ medical-monitor> help
 - [📖 Usage Guide](#-usage-guide)
 - [🌐 REST APIs](#-rest-apis)
 - [🚧 Current Status](#-current-status)
-- [🤝 Contributing](#-contributing)|
-- [🏗️ Architecture](#-architecture)| 
-
-```mermaid
-graph TB
-    A[Interactive Console] --> B[Service Layer]
-    B --> C[Concurrent Monitoring]
-    C --> D[Patient Threads]
-    C --> E[Alert System]
-    B --> F[REST APIs]
-    F --> G[Web Interface]
-    D --> H[(H2 Database)]
-    E --> H
-```
-
-### 🗂️ Project Structure
-```
-src/
-├── 📁 main/java/
-│   ├── 🎮 controllers/     # REST Controllers
-│   ├── ⚙️  services/        # Business Logic + Concurrency
-│   ├── 📊 models/          # JPA Entities
-│   ├── 🖥️  console/        # Interactive Console
-│   └── ⚙️  config/         # Spring Configuration
-├── 📁 main/resources/
-│   ├── 🎨 templates/       # Thymeleaf Views
-│   ├── 📄 static/          # Web Assets
-│   └── ⚙️  application.yml # App Configuration
-└── 🧪 test/               # Unit Tests
-```
-
-| 👩‍💻 **Houda Belhad** | + | 👩‍💻 **Salma Boughanja** |Master Ingénierie de Développement Logiciel et Décisionnel| FSR - Université Mohammed V || Rabat, Maroc |
-
-
-**📚 Module :** Programmation Concurrente  
-**👨‍🏫 Encadrant :** Mr. Ouacha Ali  
+- [🧪 Testing](#-testing)
+- [🤝 Contributing](#-contributing)
 
 ---
 
 ## 📋 Project Overview
 
-A **real-time medical monitoring system** built with Spring Boot, featuring concurrent programming concepts for patient vital signs surveillance.
+Un **système de surveillance médicale en temps réel** développé avec Spring Boot, mettant en œuvre les concepts de programmation concurrente pour la surveillance des signes vitaux des patients.
 
-### 🎯 Key Features
+### 🎯 Fonctionnalités Clés
 
-- 👥 **Multi-patient monitoring** with concurrent threads
-- ⚡ **Real-time data simulation** (temperature, heart rate, blood pressure)
-- 🚨 **Automated alert system** with configurable thresholds
-- 🖥️ **Interactive console interface** for system management
-- 🌐 **RESTful APIs** for external integration
-- 📊 **Asynchronous data processing**
+- 👥 **Surveillance multi-patients** avec threads concurrents
+- ⚡ **Simulation de données en temps réel** (température, fréquence cardiaque, tension artérielle)
+- 🚨 **Système d'alertes automatisé** avec seuils configurables
+- 🖥️ **Interface console interactive** pour la gestion du système
+- 🌐 **APIs RESTful** pour l'intégration externe
+- 📊 **Traitement asynchrone des données**
 
-### 🏆 Learning Objectives
+### 🏆 Objectifs Pédagogiques
 
-This project demonstrates practical implementation of:
-- **Multi-threading** and **concurrent execution**
-- **Thread synchronization** and **data consistency**
-- **Asynchronous programming** with Spring Boot
-- **Real-time monitoring** architecture
+Ce projet démontre l'implémentation pratique de :
+- **Multi-threading** et **exécution concurrente**
+- **Synchronisation des threads** et **cohérence des données**
+- **Programmation asynchrone** avec Spring Boot
+- **Architecture de surveillance temps réel**
 
 ---
 
 ## 🔧 Concurrent Programming Features
 
-This project showcases advanced concurrent programming concepts implemented with **Spring Boot**:
+Ce projet met en valeur des concepts avancés de programmation concurrente implémentés avec **Spring Boot** :
 
-### 🧵 Multi-Threading Architecture
+### 🧵 Architecture Multi-Threading
 ```java
-// Dedicated thread per patient sensor simulator
+// Thread dédié par simulateur de capteur patient
 @Service
 public class SensorSimulatorService {
     private final ScheduledExecutorService executorService = 
@@ -109,85 +84,117 @@ public class SensorSimulatorService {
     
     @Async
     public CompletableFuture<Void> startPatientMonitoring(Long patientId) {
-        // Asynchronous monitoring implementation
+        // Implémentation de surveillance asynchrone
     }
 }
 ```
 
-### ⚙️ Core Concurrent Features
+### ⚙️ Fonctionnalités Concurrentes Principales
 
-| Feature | Implementation | Benefit |
-|---------|----------------|---------|
-| **🔄 Asynchronous Execution** | `@Async`, `CompletableFuture` | Non-blocking operations |
-| **⏰ Scheduled Tasks** | `@Scheduled`, `ScheduledExecutorService` | Periodic data generation |
-| **🔒 Thread Safety** | `ConcurrentHashMap`, Synchronized methods | Data consistency |
-| **🚀 Parallel Processing** | Thread pools, Concurrent collections | Performance optimization |
+| Fonctionnalité | Implémentation | Bénéfice |
+|----------------|----------------|----------|
+| **🔄 Exécution Asynchrone** | `@Async`, `CompletableFuture` | Opérations non-bloquantes |
+| **⏰ Tâches Planifiées** | `@Scheduled`, `ScheduledExecutorService` | Génération périodique de données |
+| **🔒 Thread Safety** | `ConcurrentHashMap`, méthodes synchronisées | Cohérence des données |
+| **🚀 Traitement Parallèle** | Pools de threads, collections concurrentes | Optimisation des performances |
 
-### 📊 Concurrency Patterns Used
+### 📊 Patterns de Concurrence Utilisés
 
-- **Producer-Consumer**: Sensor data generation → Alert processing
-- **Observer Pattern**: Real-time data updates → Console notifications  
-- **Thread Pool Management**: Optimized resource utilization
-- **Lock-Free Programming**: ConcurrentHashMap for shared state
+- **Producteur-Consommateur** : Génération de données capteur → Traitement d'alertes
+- **Pattern Observer** : Mises à jour temps réel → Notifications console  
+- **Gestion de Pool de Threads** : Utilisation optimisée des ressources
+- **Programmation Lock-Free** : ConcurrentHashMap pour l'état partagé
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TB
+    A[Console Interactive] --> B[Couche Service]
+    B --> C[Surveillance Concurrente]
+    C --> D[Threads Patients]
+    C --> E[Système d'Alertes]
+    B --> F[APIs REST]
+    F --> G[Interface Web]
+    D --> H[(Base de Données H2)]
+    E --> H
+```
+
+### 🗂️ Structure du Projet
+```
+src/
+├── 📁 main/java/
+│   ├── 🎮 controllers/     # Contrôleurs REST
+│   ├── ⚙️  services/        # Logique métier + Concurrence
+│   ├── 📊 models/          # Entités JPA
+│   ├── 🖥️  console/        # Console Interactive
+│   └── ⚙️  config/         # Configuration Spring
+├── 📁 main/resources/
+│   ├── 🎨 templates/       # Vues Thymeleaf
+│   ├── 📄 static/          # Assets Web
+│   └── ⚙️  application.yml # Configuration App
+└── 🧪 test/               # Tests Unitaires
+```
 
 ---
 
 ## 🚀 Installation
 
-### Prerequisites
+### Prérequis
 - ☕ **Java 11+**
 - 📦 **Maven 3.6+**
-- 🔌 **Port 8080** available
+- 🔌 **Port 8080** disponible
 
-### Setup
+### Installation
 ```bash
-# 1. Clone repository
+# 1. Cloner le repository
 git clone https://github.com/[username]/medical-monitoring-system.git
 cd medical-monitoring-system
 
-# 2. Build project
+# 2. Construire le projet
 mvn clean install
 
-# 3. Run application
+# 3. Lancer l'application
 mvn spring-boot:run
-# OR
+# OU
 java -jar target/medical-monitoring-0.0.1-SNAPSHOT.jar
 ```
 
-### Access Points
-- 🖥️  **Interactive Console**: Starts automatically in terminal
-- 🌐 **Web Interface**: http://localhost:8080 *(in development)*
-- 📡 **REST APIs**: http://localhost:8080/api/
+### Points d'Accès
+- 🖥️  **Console Interactive** : Démarre automatiquement dans le terminal
+- 🌐 **Interface Web** : http://localhost:8080 *(en développement)*
+- 📡 **APIs REST** : http://localhost:8080/api/
 
 ---
 
 ## 📖 Usage Guide
 
-### 🖥️ Interactive Console
+### 🖥️ Console Interactive
 
-The system starts with an interactive console for real-time management:
+Le système démarre avec une console interactive pour la gestion temps réel :
 
 ```bash
-🚀 Medical Monitoring System Started
-💡 Type 'help' to see available commands
-🔇 Silent mode enabled (use 'debug on' for details)
+🚀 Interface console démarrée
+💡 Tapez 'help' pour voir les commandes disponibles
+🔇 Mode silencieux activé par défaut (utilisez 'debug on' pour voir les détails)
 
 medical-monitor> 
 ```
 
-### 🏥 Core Commands
+### 🏥 Commandes Principales
 
 <details>
-<summary>👥 <strong>Patient Management</strong></summary>
+<summary>👥 <strong>Gestion des Patients</strong></summary>
 
 ```bash
-# Add a new patient
+# Ajouter un nouveau patient
 medical-monitor> add-patient Dupont Jean
-✅ Patient added successfully: Jean Dupont (ID: 1)
+✅ Patient ajouté avec succès: Jean Dupont (ID: 1)
 
-# List all patients  
+# Lister tous les patients  
 medical-monitor> list-patients
-👥 PATIENT LIST:
+👥 LISTE DES PATIENTS:
 ─────────────────────────────────────────
 ID: 1 | Jean Dupont
 ID: 2 | Sophie Martin
@@ -195,137 +202,137 @@ ID: 2 | Sophie Martin
 </details>
 
 <details>
-<summary>📊 <strong>Vital Signs Monitoring</strong></summary>
+<summary>📊 <strong>Surveillance des Signes Vitaux</strong></summary>
 
 ```bash
-# Start monitoring a patient
+# Démarrer la surveillance d'un patient
 medical-monitor> start-monitoring 1
-🔍 Monitoring started for Jean Dupont (ID: 1)
+🔍 Surveillance démarrée pour Jean Dupont (ID: 1)
 
-# View real-time data
+# Voir les données en temps réel
 medical-monitor> show-data 1
-📊 SENSOR DATA - Jean Dupont
-─────────────────────────────────────────
-🌡️  Temperature: 36.8°C
-❤️  Heart Rate: 72 bpm  
-🩸 Blood Pressure: 120/80 mmHg
+📊 DONNÉES CAPTEUR - Jean Dupont
+─────────────────────────────────────────────────────
+🌡️  Température: 36.8°C
+❤️  Fréquence cardiaque: 72 bpm
+🩸 Pression artérielle: 120/80 mmHg
 ⏰ Timestamp: 15/06/2025 14:30:45
 
-# Live monitoring mode
+# Mode surveillance live
 medical-monitor> monitor-live 1
-🔴 LIVE MONITORING - Jean Dupont
-Press ENTER to stop...
-# Updates every 2 seconds
+🔴 SURVEILLANCE EN TEMPS RÉEL - Jean Dupont
+Appuyez sur ENTRÉE pour arrêter...
+# Mises à jour toutes les 2 secondes
 ```
 </details>
 
 <details>
-<summary>🚨 <strong>Alert Management</strong></summary>
+<summary>🚨 <strong>Gestion des Alertes</strong></summary>
 
 ```bash  
-# View active alerts
+# Voir les alertes actives
 medical-monitor> show-alerts
-🚨 ACTIVE ALERTS (2):
-─────────────────────────────────────────
-🚨 [ID:1] Patient 1 - TEMPERATURE: 38.2°C (threshold: 37.5°C)
-🚨 [ID:2] Patient 2 - HEART_RATE: 45 bpm (threshold: 60.0 bpm)
+🚨 ALERTES ACTIVES (2):
+─────────────────────────────────────────────────────
+🚨 [ID:1] Patient 1 - TEMPERATURE: 38.2 (seuil franchi: 37.5) - 15/06 14:32:15
+🚨 [ID:2] Patient 2 - HEART_RATE: 45 (seuil franchi: 60.0) - 15/06 14:32:18
 
-# Acknowledge specific alert
+# Acquitter une alerte spécifique
 medical-monitor> ack-alert 1
-✅ Alert ID 1 acknowledged
+✅ Alerte ID 1 acquittée
 
-# Acknowledge all alerts for a patient
+# Acquitter toutes les alertes d'un patient
 medical-monitor> ack-patient-alerts 2
-✅ All alerts for patient ID 2 acknowledged
+✅ Toutes les alertes du patient ID 2 ont été acquittées
 ```
 </details>
 
-### ⚙️ System Commands
+### ⚙️ Commandes Système
 ```bash
-medical-monitor> help           # Show all commands
-medical-monitor> status         # System overview
-medical-monitor> debug on       # Enable debug mode
-medical-monitor> pause-all      # Pause all monitoring
-medical-monitor> resume-all     # Resume all monitoring  
-medical-monitor> exit           # Quit application
+medical-monitor> help           # Afficher toutes les commandes
+medical-monitor> status         # Vue d'ensemble du système
+medical-monitor> debug on       # Activer le mode debug
+medical-monitor> pause-all      # Suspendre toute surveillance
+medical-monitor> resume-all     # Reprendre toute surveillance  
+medical-monitor> exit           # Quitter l'application
 ```
 
-### 🎯 Alert Thresholds
-- **🌡️ Temperature**: < 36.0°C or > 37.5°C
-- **❤️ Heart Rate**: < 60 bpm or > 100 bpm  
-- **🩸 Blood Pressure**: > 140 mmHg (systolic)
+### 🎯 Seuils d'Alerte
+- **🌡️ Température** : < 36.0°C ou > 37.5°C
+- **❤️ Fréquence Cardiaque** : < 60 bpm ou > 100 bpm  
+- **🩸 Pression Artérielle** : > 140 mmHg (systolique)
 
 ---
 
 ## 🌐 REST APIs
 
-**Status: ✅ Fully Functional** - All endpoints support asynchronous operations
+**Statut : ✅ Entièrement Fonctionnelles** - Tous les endpoints supportent les opérations asynchrones
 
-### 📋 API Documentation
+### 📋 Documentation API
 
 <details>
-<summary>👥 <strong>Patient Endpoints</strong></summary>
+<summary>👥 <strong>Endpoints Patients</strong></summary>
 
 ```http
-GET    /api/patients              # List all patients
-POST   /api/patients              # Add new patient  
-GET    /api/patients/{id}         # Get patient details
-DELETE /api/patients/{id}         # Delete patient
+GET    /api/patients              # Lister tous les patients
+POST   /api/patients              # Ajouter nouveau patient  
+GET    /api/patients/{id}         # Détails d'un patient
+DELETE /api/patients/{id}         # Supprimer un patient
 ```
 
-**Example Usage:**
+**Exemple d'utilisation :**
 ```bash
-# Add patient
+# Ajouter un patient
 curl -X POST http://localhost:8080/api/patients \
   -H "Content-Type: application/json" \
   -d '{"firstName":"Jean","lastName":"Dupont"}'
 
-# Get all patients  
+# Obtenir tous les patients  
 curl http://localhost:8080/api/patients
 ```
 </details>
 
 <details>
-<summary>📊 <strong>Monitoring Endpoints</strong></summary>
+<summary>📊 <strong>Endpoints Surveillance</strong></summary>
 
 ```http
-POST   /api/monitoring/start/{id} # Start patient monitoring
-POST   /api/monitoring/stop/{id}  # Stop patient monitoring  
-GET    /api/monitoring/data/{id}  # Get patient vital signs
-GET    /api/monitoring/status     # Get system status
+POST   /api/monitoring/start/{id} # Démarrer surveillance patient
+POST   /api/monitoring/stop/{id}  # Arrêter surveillance patient  
+GET    /api/monitoring/data/{id}  # Obtenir signes vitaux patient
+GET    /api/monitoring/status     # Obtenir statut système
 ```
 
-**Example Usage:**
+**Exemple d'utilisation :**
 ```bash
-# Start monitoring
+# Démarrer surveillance
 curl -X POST http://localhost:8080/api/monitoring/start/1
 
-# Get real-time data
+# Obtenir données temps réel
 curl http://localhost:8080/api/monitoring/data/1
 ```
 </details>
 
 <details>
-<summary>🚨 <strong>Alert Endpoints</strong></summary>
+<summary>🚨 <strong>Endpoints Alertes</strong></summary>
 
 ```http
-GET    /api/alerts                # Get all alerts
-POST   /api/alerts/{id}/ack       # Acknowledge alert
-GET    /api/alerts/patient/{id}   # Get patient alerts
-GET    /api/alerts/active         # Get active alerts only
+GET    /api/alerts                # Obtenir toutes les alertes
+POST   /api/alerts/{id}/ack       # Acquitter une alerte
+GET    /api/alerts/patient/{id}   # Obtenir alertes d'un patient
+GET    /api/alerts/active         # Obtenir alertes actives uniquement
 ```
 
-**Example Usage:**
+**Exemple d'utilisation :**
 ```bash
-# Get active alerts
+# Obtenir alertes actives
 curl http://localhost:8080/api/alerts/active
 
-# Acknowledge alert
+# Acquitter une alerte
 curl -X POST http://localhost:8080/api/alerts/1/ack
 ```
 </details>
 
-### 📱 Response Format
+### 📱 Format de Réponse
 ```json
 {
   "success": true,
@@ -343,24 +350,24 @@ curl -X POST http://localhost:8080/api/alerts/1/ack
 
 ## 🚧 Current Status & Roadmap
 
-### ✅ Completed Features
+### ✅ Fonctionnalités Terminées
 
-| Component | Status | Details |
+| Composant | Statut | Détails |
 |-----------|--------|---------|
-| 🖥️ **Interactive Console** | ✅ **100% Functional** | All commands working perfectly |
-| 📡 **REST APIs** | ✅ **100% Functional** | All endpoints with async support |
-| 🧵 **Concurrent Monitoring** | ✅ **100% Functional** | Multi-threaded patient surveillance |
-| 🚨 **Alert System** | ✅ **100% Functional** | Real-time alerts with acknowledgment |
-| 💾 **Data Persistence** | ✅ **100% Functional** | H2 database integration |
+| 🖥️ **Console Interactive** | ✅ **100% Fonctionnelle** | Toutes les commandes opérationnelles |
+| 📡 **APIs REST** | ✅ **100% Fonctionnelles** | Tous les endpoints avec support async |
+| 🧵 **Surveillance Concurrente** | ✅ **100% Fonctionnelle** | Surveillance multi-threads des patients |
+| 🚨 **Système d'Alertes** | ✅ **100% Fonctionnel** | Alertes temps réel avec acquittement |
+| 💾 **Persistance Données** | ✅ **100% Fonctionnelle** | Intégration base de données H2 |
 
-### 🔄 In Progress
+### 🔄 En Cours de Développement
 
-#### 🎨 **Web Interface (Thymeleaf)**
-**Current Issue:** Asynchronous display in browser needs corrections
+#### 🎨 **Interface Web (Thymeleaf)**
+**Problème Actuel :** L'affichage asynchrone dans le navigateur nécessite des corrections
 
-**Planned Solutions:**
+**Solutions Prévues :**
 ```html
-<!-- WebSocket Integration -->
+<!-- Intégration WebSocket -->
 <script>
 const socket = new SockJS('/websocket');
 const stompClient = Stomp.over(socket);
@@ -372,7 +379,7 @@ stompClient.connect({}, function(frame) {
 });
 </script>
 
-<!-- Auto-refresh with AJAX -->
+<!-- Auto-refresh avec AJAX -->
 <script>
 setInterval(() => {
     fetch(`/api/monitoring/data/${patientId}`)
@@ -382,25 +389,25 @@ setInterval(() => {
 </script>
 ```
 
-### 🚀 Future Enhancements
+### 🚀 Améliorations Futures
 
-- **📡 WebSocket Integration**: Real-time bidirectional communication
-- **📊 Dynamic Dashboard**: Live charts and graphs  
-- **⚡ Server-Sent Events**: Push notifications for alerts
-- **🔄 Reactive Programming**: Migration to Spring WebFlux
-- **📱 Mobile-Responsive UI**: Better mobile experience
-- **🔔 Email Notifications**: Alert system via email
+- **📡 Intégration WebSocket** : Communication bidirectionnelle temps réel
+- **📊 Dashboard Dynamique** : Graphiques et diagrammes en direct  
+- **⚡ Server-Sent Events** : Notifications push pour les alertes
+- **🔄 Programmation Réactive** : Migration vers Spring WebFlux
+- **📱 UI Responsive Mobile** : Meilleure expérience mobile
+- **🔔 Notifications Email** : Système d'alertes par email
 
-### 🐛 Known Issues
+### 🐛 Problèmes Connus
 
-1. **Frontend Async Updates**: Thymeleaf pages don't auto-refresh
-2. **WebSocket Setup**: Needs configuration for real-time web updates
-3. **Chart Rendering**: Dynamic graphs implementation pending
+1. **Mises à jour Frontend Async** : Les pages Thymeleaf ne se rafraîchissent pas automatiquement
+2. **Configuration WebSocket** : Nécessite configuration pour mises à jour web temps réel
+3. **Rendu des Graphiques** : Implémentation des graphiques dynamiques en attente
 
-### 💡 Technical Improvements Planned
+### 💡 Améliorations Techniques Prévues
 
 ```java
-// WebSocket Configuration
+// Configuration WebSocket
 @Configuration
 @EnableWebSocket  
 public class WebSocketConfig implements WebSocketConfigurer {
@@ -412,7 +419,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     }
 }
 
-// Server-Sent Events Controller
+// Contrôleur Server-Sent Events
 @GetMapping(value = "/stream/alerts", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 public Flux<ServerSentEvent<Alert>> streamAlerts() {
     return alertService.getAlertStream()
@@ -424,103 +431,105 @@ public Flux<ServerSentEvent<Alert>> streamAlerts() {
 
 ## 🧪 Testing
 
-### Quick Test (5 minutes)
+### Test Rapide (5 minutes)
 ```bash
-# Add a test patient
+# Ajouter un patient de test
 medical-monitor> add-patient Test Patient
 
-# Start monitoring  
+# Démarrer surveillance  
 medical-monitor> start-monitoring 1
 
-# Wait 30 seconds, then check data
+# Attendre 30 secondes, puis vérifier données
 medical-monitor> show-data 1
 
-# Check for alerts
+# Vérifier les alertes
 medical-monitor> show-alerts
 ```
 
-### Complete Test Suite (10 minutes)
+### Suite de Tests Complète (10 minutes)
 ```bash
-# 1. Add multiple patients
+# 1. Ajouter plusieurs patients
 medical-monitor> add-patient Dupont Jean
 medical-monitor> add-patient Martin Sophie  
 medical-monitor> add-patient Dubois Pierre
 
-# 2. Start monitoring all patients
+# 2. Démarrer surveillance pour tous
 medical-monitor> start-monitoring 1
 medical-monitor> start-monitoring 2
 medical-monitor> start-monitoring 3
 
-# 3. Live monitoring demo
+# 3. Démonstration surveillance live
 medical-monitor> monitor-live 1
-# Press ENTER after a few seconds
+# Appuyer sur ENTRÉE après quelques secondes
 
-# 4. Check all patient data
+# 4. Vérifier données de tous les patients
 medical-monitor> show-data 1
 medical-monitor> show-data 2
 medical-monitor> show-data 3
 
-# 5. Wait for alerts (1-2 minutes)
+# 5. Attendre les alertes (1-2 minutes)
 medical-monitor> show-alerts
 
-# 6. Acknowledge alerts
+# 6. Acquitter les alertes
 medical-monitor> ack-alert [ALERT_ID]
 medical-monitor> ack-patient-alerts [PATIENT_ID]
 
-# 7. Final system status
+# 7. Statut final du système
 medical-monitor> status
 ```
 
-### 🎯 Success Criteria
+### 🎯 Critères de Réussite
 
-- ✅ **Patients Added**: IDs assigned, visible in list
-- ✅ **Monitoring Active**: Status shows active simulators  
-- ✅ **Data Generated**: `show-data` displays recent values
-- ✅ **Alerts Triggered**: `show-alerts` shows active alerts
-- ✅ **Acknowledgment Works**: Alerts change to "ACKNOWLEDGED" status
-- ✅ **Continuous Monitoring**: New data every 3 seconds
+- ✅ **Patients Ajoutés** : IDs assignés, visibles dans la liste
+- ✅ **Surveillance Active** : Le statut montre les simulateurs actifs  
+- ✅ **Données Générées** : `show-data` affiche les valeurs récentes
+- ✅ **Alertes Déclenchées** : `show-alerts` montre les alertes actives
+- ✅ **Acquittement Fonctionne** : Les alertes passent au statut "ACQUITTÉE"
+- ✅ **Surveillance Continue** : Nouvelles données toutes les 3 secondes
+
+---
 
 ## 🤝 Contributing
 
-### Development Setup
+### Configuration Développement
 ```bash
-# Fork and clone the repository
+# Fork et cloner le repository
 git clone https://github.com/[your-username]/medical-monitoring-system.git
 
-# Create a feature branch
+# Créer une branche feature
 git checkout -b feature/your-feature-name
 
-# Make changes and commit
+# Effectuer les modifications et commit
 git commit -am "Add your feature"
 
-# Push to your fork and submit a pull request
+# Push vers votre fork et soumettre une pull request
 git push origin feature/your-feature-name
 ```
 
-### 📋 Development Guidelines
+### 📋 Guidelines de Développement
 
-1. **Concurrent Programming**: Follow thread-safety best practices
-2. **Code Style**: Use consistent formatting and meaningful names
-3. **Testing**: Add unit tests for new features
-4. **Documentation**: Update README for significant changes
+1. **Programmation Concurrente** : Suivre les bonnes pratiques de thread-safety
+2. **Style de Code** : Utiliser un formatage cohérent et des noms significatifs
+3. **Tests** : Ajouter des tests unitaires pour les nouvelles fonctionnalités
+4. **Documentation** : Mettre à jour le README pour les changements significatifs
 
-### 🎓 Academic Context
+### 🎓 Contexte Académique
 
-This project is developed as part of the **Concurrent Programming** course at **FSR - Mohammed V University, Rabat**. It demonstrates practical implementation of:
+Ce projet est développé dans le cadre du cours de **Programmation Concurrente** à la **FSR - Université Mohammed V, Rabat**. Il démontre l'implémentation pratique de :
 
-- Multi-threading concepts
-- Synchronization mechanisms  
-- Asynchronous programming
-- Real-time system design
+- Concepts de multi-threading
+- Mécanismes de synchronisation  
+- Programmation asynchrone
+- Design de systèmes temps réel
 
-**Instructor**: Mr. Ouacha Ali  
-**Students**: Houda Belhad & Salma Boughanja
+**Enseignant** : Mr. Ouacha Ali  
+**Étudiantes** : Houda Belhad & Salma Boughanja
 
 ---
 
 ## 📄 License
 
-This project is developed for academic purposes as part of the Master's program in **Software Engineering and Decision Systems** at FSR - Mohammed V University, Rabat.
+Ce projet est développé à des fins académiques dans le cadre du programme de Master en **Ingénierie de Développement Logiciel et Décisionnel** à la FSR - Université Mohammed V, Rabat.
 
 ---
 
@@ -529,56 +538,15 @@ This project is developed for academic purposes as part of the Master's program 
 👩‍💻 **Houda Belhad** - [GitHub Profile]  
 👩‍💻 **Salma Boughanja** - [GitHub Profile]
 
-🏫 **Institution**: Faculty of Sciences, Mohammed V University, Rabat  
-📧 **Academic Contact**: [Contact information]
+🏫 **Institution** : Faculté des Sciences, Université Mohammed V, Rabat  
+📧 **Contact Académique** : [Informations de contact]
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo if you find it helpful!**
+**⭐ Mettez une étoile à ce repo si vous le trouvez utile !**
 
-Made with ❤️ for learning concurrent programming
+Fait avec ❤️ pour apprendre la programmation concurrente
 
 </div>
-│   ├── services/        # Logique métier + concurrence
-│   ├── models/         # Entités JPA
-│   ├── console/        # Interface console interactive
-│   └── config/         # Configuration Spring
-├── main/resources/
-│   ├── templates/      # Vues Thymeleaf (en développement)
-│   ├── static/         # Assets web
-│   └── application.yml # Configuration
-└── test/              # Tests unitaires
-```
-
----
-
-## 🎯 Objectifs Pédagogiques Atteints
-
-### Programmation Concurrente
-- ✅ **Gestion multi-threads** : Surveillance simultanée de plusieurs patients
-- ✅ **Synchronisation** : Protection des données partagées
-- ✅ **Scheduling** : Tâches périodiques et asynchrones
-- ✅ **Thread Safety** : Collections concurrentes et gestion des états
-
-### Architecture Logicielle
-- ✅ **Modularité** : Séparation claire des responsabilités
-- ✅ **APIs REST** : Communication asynchrone
-- ✅ **Persistence** : Gestion concurrente de la base de données
-- ✅ **Interface utilisateur** : Console interactive non-bloquante
-
----
-
-## 📞 Contact et Support
-
-**Étudiantes :** Houda Belhad & Salma Boughanja  
-**Email :** [emails des étudiantes]  
-**Encadrant :** Mr. Ouacha Ali  
-**Institution :** FSR - Université Mohammed V, Rabat
-
----
-
-## 📝 License
-
-Ce projet est développé dans le cadre académique du Master Ingénierie de Développement Logiciel et Décisionnel - FSR UM5 Rabat.
