@@ -64,8 +64,8 @@ src/
 └── 🧪 test/               # Unit Tests
 ```
 
-| 👩‍💻 **Houda Belhad** | Master Ingénierie de Développement | FSR - Université Mohammed V |
-| 👩‍💻 **Salma Boughanja** | Logiciel et Décisionnel | Rabat, Maroc |
+| 👩‍💻 **Houda Belhad** | + | 👩‍💻 **Salma Boughanja** |Master Ingénierie de Développement Logiciel et Décisionnel| FSR - Université Mohammed V || Rabat, Maroc |
+
 
 **📚 Module :** Programmation Concurrente  
 **👨‍🏫 Encadrant :** Mr. Ouacha Ali  
