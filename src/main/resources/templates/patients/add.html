@@ -1,34 +1,201 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un Patient</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .form-card {
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .form-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border-radius: 15px 15px 0 0;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .required {
+            color: #dc3545;
+        }
+    </style>
 </head>
-<body>
-<div class="container mt-4">
-    <h1>Ajouter un Patient</h1>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heartbeat me-2"></i>Système de Monitoring Médical
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/patients">
+                    <i class="fas fa-users me-1"></i>Patients
+                </a>
+                <a class="nav-link" href="/monitoring">
+                    <i class="fas fa-chart-line me-1"></i>Surveillance
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="form-card card border-0">
+                    <!-- En-tête du formulaire -->
+                    <div class="form-header text-white p-4">
+                        <div class="text-center">
+                            <i class="fas fa-user-plus fa-3x mb-3"></i>
+                            <h3 class="mb-1">Nouveau Patient</h3>
+                            <p class="mb-0 opacity-75">Enregistrer un nouveau patient dans le système</p>
+                        </div>
+                    </div>
+
+                    <!-- Corps du formulaire -->
+                    <div class="card-body p-4">
+                        <form th:action="@{/patients/add}" method="post" th:object="${patient}">
+                            <div class="mb-4">
+                                <label for="nom" class="form-label fw-bold">
+                                    <i class="fas fa-user text-primary me-2"></i>Nom de famille
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" 
+                                       class="form-control form-control-lg" 
+                                       id="nom" 
+                                       th:field="*{nom}" 
+                                       placeholder="Entrez le nom de famille"
+                                       required>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Le nom de famille du patient
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="prenom" class="form-label fw-bold">
+                                    <i class="fas fa-user-circle text-primary me-2"></i>Prénom
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" 
+                                       class="form-control form-control-lg" 
+                                       id="prenom" 
+                                       th:field="*{prenom}" 
+                                       placeholder="Entrez le prénom"
+                                       required>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>Le prénom du patient
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="age" class="form-label fw-bold">
+                                    <i class="fas fa-birthday-cake text-primary me-2"></i>Âge
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="number" 
+                                       class="form-control form-control-lg" 
+                                       id="age" 
+                                       th:field="*{age}" 
+                                       placeholder="Entrez l'âge"
+                                       min="1" 
+                                       max="120"
+                                       required>
+                                <div class="form-text">
+                                    <i class="fas fa-info-circle me-1"></i>L'âge du patient (entre 1 et 120 ans)
+                                </div>
+                            </div>
+
+                            <!-- Note informative -->
+                            <div class="alert alert-info border-0 mb-4">
+                                <div class="d-flex">
+                                    <i class="fas fa-lightbulb fa-lg text-info me-3 mt-1"></i>
+                                    <div>
+                                        <strong>Information :</strong> Une fois le patient enregistré, vous pourrez démarrer sa surveillance depuis la liste des patients.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Boutons d'action -->
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/patients" class="btn btn-outline-secondary btn-lg me-md-2">
+                                    <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+                                </a>
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save me-2"></i>Enregistrer le Patient
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Pied du formulaire -->
+                    <div class="card-footer bg-light text-center">
+                        <small class="text-muted">
+                            <i class="fas fa-shield-alt me-1"></i>
+                            Toutes les informations sont sécurisées et confidentielles
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Carte d'aide -->
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <i class="fas fa-question-circle text-primary me-2"></i>Aide
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="small fw-bold text-muted">ÉTAPES SUIVANTES</h6>
+                                <ul class="list-unstyled small">
+                                    <li><i class="fas fa-check text-success me-2"></i>Enregistrer le patient</li>
+                                    <li><i class="fas fa-play text-primary me-2"></i>Démarrer la surveillance</li>
+                                    <li><i class="fas fa-chart-line text-info me-2"></i>Monitorer les signes vitaux</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="small fw-bold text-muted">SURVEILLANCE</h6>
+                                <ul class="list-unstyled small">
+                                    <li><i class="fas fa-thermometer-half text-info me-2"></i>Température corporelle</li>
+                                    <li><i class="fas fa-heartbeat text-danger me-2"></i>Fréquence cardiaque</li>
+                                    <li><i class="fas fa-tint text-warning me-2"></i>Pression artérielle</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     
-    <form th:action="@{/patients/add}" th:object="${patient}" method="post">
-        <div class="mb-3">
-            <label for="nom" class="form-label">Nom</label>
-            <input type="text" class="form-control" id="nom" th:field="*{nom}" required>
-        </div>
-        <div class="mb-3">
-            <label for="prenom" class="form-label">Prénom</label>
-            <input type="text" class="form-control" id="prenom" th:field="*{prenom}" required>
-        </div>
-        <div class="mb-3">
-            <label for="dateNaissance" class="form-label">Date de Naissance</label>
-            <input type="date" class="form-control" id="dateNaissance" th:field="*{dateNaissance}" required>
-        </div>
-        <div class="mb-3">
-            <label for="serviceHospitalier" class="form-label">Service Hospitalier</label>
-            <input type="text" class="form-control" id="serviceHospitalier" th:field="*{serviceHospitalier}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
-        <a th:href="@{/patients}" class="btn btn-secondary">Retour à la liste</a>
-    </form>
-</div>
+    <!-- Validation côté client -->
+    <script>
+        // Validation en temps réel
+        document.getElementById('nom').addEventListener('input', function() {
+            this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s-]/g, '');
+        });
+        
+        document.getElementById('prenom').addEventListener('input', function() {
+            this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s-]/g, '');
+        });
+        
+        // Focus automatique sur le premier champ
+        window.addEventListener('load', function() {
+            document.getElementById('nom').focus();
+        });
+    </script>
 </body>
 </html>

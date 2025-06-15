@@ -44,7 +44,6 @@ public class Patient {
     public String getServiceHospitalier() { return serviceHospitalier; }
     public void setServiceHospitalier(String serviceHospitalier) { this.serviceHospitalier = serviceHospitalier; }
 
-    // Builder manuel (optionnel)
     public static Builder builder() { return new Builder(); }
 
     public static class Builder {

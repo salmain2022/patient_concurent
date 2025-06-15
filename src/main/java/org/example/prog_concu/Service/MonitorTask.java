@@ -16,6 +16,7 @@ public class MonitorTask implements Runnable {
     private AlertService alertService;
 
     private final ConcurrentHashMap<Long, SensorData> latestSensorDataMap;
+    private boolean debugMode = false; // Pour contrôler l'affichage des messages
 
     public MonitorTask() {
         this.latestSensorDataMap = new ConcurrentHashMap<>();
@@ -27,14 +28,15 @@ public class MonitorTask implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("🩺 MonitorTask exécuté à " + LocalDateTime.now());
+        // Enlever le message de debug qui pollue la console
+        if (debugMode) {
+            System.out.println("🩺 MonitorTask exécuté à " + LocalDateTime.now());
+        }
 
         for (SensorData data : latestSensorDataMap.values()) {
             checkVitalSigns(data);
         }
     }
-
-
 
     private void checkVitalSigns(SensorData data) {
         Long patientId = data.getPatientId();
@@ -55,7 +57,18 @@ public class MonitorTask implements Runnable {
     public void checkAndTriggerAlert(Long patientId, String signeVital, double valeur, double min, double max) {
         if (valeur < min || valeur > max) {
             if (!alertService.isAlertActive(patientId, signeVital)) {
-                Alert alert = new Alert(patientId, signeVital, valeur, true, LocalDateTime.now());
+                // Déterminer le seuil franchi
+                double seuilFranchi = (valeur < min) ? min : max;
+                
+                Alert alert = Alert.builder()
+                        .patientId(patientId)
+                        .signeVital(signeVital)
+                        .valeurMesuree(valeur)
+                        .seuilFranchi(seuilFranchi)
+                        .timestamp(LocalDateTime.now())
+                        .active(true)
+                        .build();
+                        
                 alertService.addAlert(alert);
             }
         }
@@ -67,6 +80,15 @@ public class MonitorTask implements Runnable {
         System.out.println("Alertes actives : " + alertService.getActiveAlerts().size());
         System.out.println("Toutes alertes : " + alertService.getAllAlerts().size());
         System.out.println("===================================");
+    }
+
+    // Méthodes pour contrôler le mode debug
+    public void enableDebugMode() {
+        this.debugMode = true;
+    }
+
+    public void disableDebugMode() {
+        this.debugMode = false;
     }
 
     // Setter utile si injection manuelle

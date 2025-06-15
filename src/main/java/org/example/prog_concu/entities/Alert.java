@@ -32,9 +32,10 @@ public class Alert {
     private LocalDateTime timestamp;
     private boolean active = true;
 
-    // Constructeurs, getters et setters
-    // ...
-
+     public String getMessage() {
+        return String.format("%s anormal: %.1f (seuil: %.1f)", 
+                signeVital, valeurMesuree, seuilFranchi);
+    }
     @Override
     public String toString() {
         return "Alert{" +

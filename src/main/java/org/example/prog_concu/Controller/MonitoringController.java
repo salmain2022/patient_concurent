@@ -30,19 +30,7 @@ public class MonitoringController {
         this.alertService = alertService;
     }
 
-    @GetMapping
-public String viewMonitoring(Model model) {
-    // Récupère les données sous forme de Map standard (pas ConcurrentHashMap)
-    Map<Long, SensorData> data = new HashMap<>(monitoringManager.getAllSensorData());
     
-    // Debug dans les logs
-    System.out.println("Données envoyées à la vue:");
-    data.forEach((id, sensorData) -> System.out.println(id + " => " + sensorData));
-    
-    model.addAttribute("sensorData", data);
-    model.addAttribute("alerts", alertService.getActiveAlerts());
-    return "monitoring";
-}
 
     @PostMapping("/start")
 public String startMonitoring(@RequestParam Long patientId, RedirectAttributes redirectAttributes) {

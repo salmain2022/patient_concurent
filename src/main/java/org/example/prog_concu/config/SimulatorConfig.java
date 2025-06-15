@@ -16,12 +16,4 @@ public class SimulatorConfig {
         return new ConcurrentHashMap<>();
     }
 
-    @Bean
-    public SensorSimulator sensorSimulator(SensorDataRepository sensorDataRepository,
-                                           ConcurrentHashMap<Long, SensorData> sharedSensorDataMap) {
-        Long patientId = 1L;       // Exemple d'ID patient fixe ou paramétré autrement
-        int intervalMillis = 3000; // Exemple d'intervalle fixe
-
-        return new SensorSimulator(patientId, intervalMillis, sharedSensorDataMap, sensorDataRepository);
-    }
 }

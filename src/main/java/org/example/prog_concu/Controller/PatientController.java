@@ -39,7 +39,6 @@ public class PatientController {
         return "redirect:/patients";
     }
     
-    // Optionnel: Pour gérer aussi la soumission du formulaire intégré
     @PostMapping
     public String addPatientFromList(@ModelAttribute Patient patient, RedirectAttributes redirectAttributes) {
         return addPatient(patient, redirectAttributes);
