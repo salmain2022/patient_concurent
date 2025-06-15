@@ -1,7 +1,7 @@
 # 🏥 Medical Monitoring System
 > Système de Surveillance Médicale en Temps Réel avec Programmation Concurrente
 
-[![Java](https://img.shields.io/badge/Java-11+-orange.svg)](https://openjdk.java.net/)
+[![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://openjdk.org/projects/jdk/17/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7+-green.svg)](https://spring.io/projects/spring-boot)
 [![Maven](https://img.shields.io/badge/Maven-3.6+-blue.svg)](https://maven.apache.org/)
 [![License](https://img.shields.io/badge/License-Academic-yellow.svg)](#)
@@ -142,7 +142,7 @@ src/
 ## 🚀 Installation
 
 ### Prérequis
-- ☕ **Java 11+**
+- ☕ **Java 17+**
 - 📦 **Maven 3.6+**
 - 🔌 **Port 8080** disponible
 
