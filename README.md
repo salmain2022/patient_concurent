@@ -33,7 +33,8 @@ medical-monitor> help
 - [📖 Usage Guide](#-usage-guide)
 - [🌐 REST APIs](#-rest-apis)
 - [🚧 Current Status](#-current-status)
-- [🤝 Contributing](#-contributing)|## 🏗️ Architecture
+- [🤝 Contributing](#-contributing)|
+- [🏗️ Architecture](#-architecture)| 
 
 ```mermaid
 graph TB
@@ -61,7 +62,8 @@ src/
 │   ├── 📄 static/          # Web Assets
 │   └── ⚙️  application.yml # App Configuration
 └── 🧪 test/               # Unit Tests
-```|---|
+```
+
 | 👩‍💻 **Houda Belhad** | Master Ingénierie de Développement | FSR - Université Mohammed V |
 | 👩‍💻 **Salma Boughanja** | Logiciel et Décisionnel | Rabat, Maroc |
 
