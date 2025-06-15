@@ -133,7 +133,7 @@ src/
 ├── 📁 main/resources/
 │   ├── 🎨 templates/       # Vues Thymeleaf
 │   ├── 📄 static/          # Assets Web
-│   └── ⚙️  application.yml # Configuration App
+│   └── ⚙️  application.properties # Configuration App
 └── 🧪 test/               # Tests Unitaires
 ```
 
